@@ -1,85 +1,98 @@
-#include "../include/Tree.hpp"
+#include "../src/Tree.cpp"
 
 int main() {
-	Tree<int> tree = new Tree<int>(20);
+    std::cout << "START" << std::endl;
+    auto* tree = new Tree<int>(20);
 
-	tree->addNode(10);
-	tree->addNode(30);
-	tree->addNode(5);
-	tree->addNode(15);
-	tree->addNode(15);
-	tree->addNode(25);
-	tree->addNode(17);
+    tree->addNode(10);
+    tree->addNode(30);
+    tree->addNode(5);
+    tree->addNode(15);
+    tree->addNode(15);
+    tree->addNode(25);
+    tree->addNode(17);
+    tree->print("", tree->getRoot(), false, true);
+    std::cout << "\n\n\n\n" << std::endl;
 
-	/*
-	äåðåâüÿ ó ìåíÿ â ïðîãðàììå âûâîäÿòñÿ èíà÷å, íî òóò óäîáíåå ðèñîâàòü åãî òàê
-	              20 
-		       /      \
+    /*
+    Ð´ÐµÑ€ÐµÐ²ÑŒÑ Ñƒ Ð¼ÐµÐ½Ñ Ð² Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ðµ Ð²Ñ‹Ð²Ð¾Ð´ÑÑ‚ÑÑ Ð¸Ð½Ð°Ñ‡Ðµ, Ð½Ð¾ Ñ‚ÑƒÑ‚ ÑƒÐ´Ð¾Ð±Ð½ÐµÐµ Ñ€Ð¸ÑÐ¾Ð²Ð°Ñ‚ÑŒ ÐµÐ³Ð¾ Ñ‚Ð°Ðº
+                  20
+               /      \
               10      30
-	         /  \     / 
-		    5   15   25
-		          \
-			      17
-	*/
-
-	tree->deleteNode(17);
-	/*
-				 20
-			  /      \
-			 10      30
-			/  \    /
-		   5   15  25
-				 
+             /  \     /
+            5   15   25
+                  \
+                  17
     */
 
-	tree->addNode(17);
-	tree->deleteNode(15);
-	/*
-				 20
-			  /      \
-			 10      30
-			/  \    /
-		   5   17  25				 
-	*/
+    tree->deleteNode(17);
+    tree->print("", tree->getRoot(), false, true);
+    std::cout << "^ deleted 17\n\n\n\n" << std::endl;
+    /*
+                 20
+              /      \
+             10      30
+            /  \    /
+           5   15  25
 
-	tree->deleteNode(17);
-	tree->deleteNode(15);
-	tree->deleteNode(17);
-	tree->deleteNode(10);
-	/*
-				 20
-			  /      \
-			 15      30
-			/  \    /
-		   5   17  25
-	*/
+    */
 
-	tree->deleteNode(20);
-	/*
-				 25
-			  /      \
-			 15      30
-			/  \  
-		   5   17
-	*/
+    tree->addNode(17);
+    tree->deleteNode(15);
+    tree->print("", tree->getRoot(), false, true);
+    std::cout << "^ returned 17 and deleted 15\n\n\n\n" << std::endl;
+    /*
+                 20
+              /      \
+             10      30
+            /  \    /
+           5   17  25
+    */
 
-	// 2
-	cout << tree->getDepthOfSmallestNode() << endl;
+    tree->deleteNode(17);
+    tree->deleteNode(15);
+    tree->deleteNode(17);
+    tree->deleteNode(10);
+    tree->print("", tree->getRoot(), false, true);
+    std::cout << "deleted 17 15 17 (to check deletion of not existing element) 10\n\n\n\n" << std::endl;
+    /*
+                 20
+              /      \
+             15      30
+            /  \    /
+           5   17  25
+    */
 
-	tree->addNode(100);
-	tree->addNode(1);
-	/*
-				  25
-			   /      \
-			  15      30
-			 /  \       \
-		    5   17      100
-		   /
+    tree->deleteNode(20);
+    tree->print("", tree->getRoot(), false, true);
+    std::cout << "deleted root (20)\n\n\n\n" << std::endl;
+    /*
+                 25
+              /      \
+             15      30
+            /  \
+           5   17
+    */
+
+    // 2
+    std::cout << tree->getDepthOfSmallestNode() << std::endl;
+
+    tree->addNode(100);
+    tree->addNode(1);
+    tree->print("", tree->getRoot(), false, true);
+    std::cout << "added 100 and 1\n\n\n\n" << std::endl;
+    /*
+                  25
+               /      \
+              15      30
+             /  \       \
+            5   17      100
+           /
           1
-	*/
+    */
 
-	// 3
-	cout << tree->getDepthOfSmallestNode() << endl;
+    // 3
+    std::cout << tree->getDepthOfSmallestNode() << std::endl;
 
-	return 0;
+    return 0;
 }
