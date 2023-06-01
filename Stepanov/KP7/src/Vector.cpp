@@ -102,16 +102,15 @@ void Vector<T>::push_back(const T &value)
     ++sz;
 }
 template<typename T>
+void Vector<T>::emplace_back(){}
+template<typename T>
 template<typename... Args>
-void Vector<T>::emplace_back(const Args &...args)
+void Vector<T>::emplace_back(const T &First, const Args &...args)
 {
 
-    if (cap == sz) {
-
-        reserve(2 * cap);
-    }
-    new (arr + sz) T(args...);
-    ++sz;
+    push_back(First);
+    emplace_back(args...);
+    return;
 }
 template<typename T>
 void Vector<T>::pop_back()
