@@ -1,7 +1,7 @@
 #ifndef LAB26_STACK_H
 #define LAB26_STACK_H
 
-#include "../src/vector.cpp"
+#include "../../../Huan/kp7/Vector.hpp"
 
 template<typename T>
 class Stack {
