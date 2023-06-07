@@ -1,8 +1,7 @@
 #include "../include/Database.h"
 #include <iostream>
 #include <string>
-#include <map>
-#include <vector>
+#include "../../../Huan/kp7/Vector.hpp"
 
 DataBase::DataBase() {
     path = "../tests/database.txt";
@@ -80,24 +79,22 @@ void DataBase::addRow(const Row &row) {
 std::string DataBase::findClassesWithMoreMthanF(const std::string &output_file) {
     std::string line;
     std::ofstream output(output_file);
-
-    std::map<std::string, std::vector<int>> grade_map;
-
+    Vector<std::string> grades;
     for (int i = 0; i < table.size(); i++) {
-        std::string sex = table[i].sex;
-        std::string grade = std::to_string(table[i].grade_number) + table[i].grade_letter;
-
-        if (!grade_map.contains(grade)) {
-            grade_map[grade].push_back(0);
-            grade_map[grade].push_back(0);
-        }
-
-        if (sex == "F") grade_map[grade][0]++;
-        else if (sex == "M") grade_map[grade][1]++;
+        grades.push_back(std::to_string(table[i].grade_number) + table[i].grade_letter);
     }
 
-    for (auto & [key, value] : grade_map) {
-        if (value[1] > value[0]) output << key << " \n";
+    for (int i = 0; i < grades.size(); i++) {
+        int M = 0;
+        int F = 0;
+        for (int j = 0; j < table.size(); j++) {
+            std::string sex = table[i].sex;
+
+            if (sex == "F") F++;
+            else if (sex == "M") M++;
+        }
+
+        if (F > M) output << grades[i] << " \n";
     }
 
     output.close();
