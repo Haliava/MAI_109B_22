@@ -6,8 +6,7 @@
 #include <iomanip>
 #include <fstream>
 #include <string>
-#include <vector>
-#include "../include/Vector.h"
+#include "../../../Huan/kp7/Vector.hpp"
 
 class DataBase {
 public:
