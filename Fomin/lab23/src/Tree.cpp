@@ -147,3 +147,28 @@ template<typename T>
 void Tree<T>::print() {
     print("", root, false, true);
 }
+
+template<typename T>
+bool Tree<T>::findNode(const T &val) {
+    Node<T>* current = this->root;
+
+    while (current) {
+        if (val < current->val) {
+            if (!current->left)
+                return false;
+
+            current = current->left;
+        }
+        else if (val > current->val) {
+            if (!current->right)
+                return false;
+
+            current = current->right;
+        }
+        else {
+            return true;
+        }
+    }
+
+    return false;
+}

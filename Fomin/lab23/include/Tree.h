@@ -16,6 +16,7 @@ public:
 
     void addNode(const T& val);
     void deleteNode(const T& val);
+    bool findNode(const T& val);
 
     int getMinNodeDepth();
 

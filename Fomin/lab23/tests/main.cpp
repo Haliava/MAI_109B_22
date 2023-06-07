@@ -11,7 +11,8 @@ int main() {
     tree->addNode(15);
     tree->addNode(25);
     tree->addNode(17);
-    tree->print("", tree->getRoot(), false, true);
+    tree->print();
+    //tree->print("", tree->getRoot(), false, true);
     std::cout << "\n\n\n\n" << std::endl;
 
     /*
@@ -26,7 +27,8 @@ int main() {
     */
 
     tree->deleteNode(17);
-    tree->print("", tree->getRoot(), false, true);
+    tree->print();
+    //tree->print("", tree->getRoot(), false, true);
     std::cout << "^ deleted 17\n\n\n\n" << std::endl;
     /*
                  20
@@ -39,7 +41,8 @@ int main() {
 
     tree->addNode(17);
     tree->deleteNode(15);
-    tree->print("", tree->getRoot(), false, true);
+    tree->print();
+    //tree->print("", tree->getRoot(), false, true);
     std::cout << "^ returned 17 and deleted 15\n\n\n\n" << std::endl;
     /*
                  20
@@ -53,7 +56,8 @@ int main() {
     tree->deleteNode(15);
     tree->deleteNode(17);
     tree->deleteNode(10);
-    tree->print("", tree->getRoot(), false, true);
+    tree->print();
+    //tree->print("", tree->getRoot(), false, true);
     std::cout << "deleted 17 15 17 (to check deletion of not existing element) 10\n\n\n\n" << std::endl;
     /*
                  20
@@ -64,7 +68,8 @@ int main() {
     */
 
     tree->deleteNode(20);
-    tree->print("", tree->getRoot(), false, true);
+    tree->print();
+    //tree->print("", tree->getRoot(), false, true);
     std::cout << "deleted root (20)\n\n\n\n" << std::endl;
     /*
                  25
@@ -79,7 +84,8 @@ int main() {
 
     tree->addNode(100);
     tree->addNode(1);
-    tree->print("", tree->getRoot(), false, true);
+    tree->print();
+    //tree->print("", tree->getRoot(), false, true);
     std::cout << "added 100 and 1\n\n\n\n" << std::endl;
     /*
                   25
