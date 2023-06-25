@@ -16,7 +16,8 @@ public:
     void resize(size_t n, const T &value = T());
     void push_back(const T &value);
     template<typename... Args>
-    void emplace_back(const Args &...args);
+    void emplace_back(const T &First, const Args &...args);
+    void emplace_back();
     void pop_back();
     T &at(size_t pos);
     T &front();
