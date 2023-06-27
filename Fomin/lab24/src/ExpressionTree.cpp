@@ -1,6 +1,6 @@
 #include "../include/ExpressionTree.h"
-#include "../../../Koncebalov/lab24/Stack.hpp"
-#include "../../../Huan/kp7/Vector.hpp"
+#include "../src/Stack.cpp"
+#include "../../kp7/src/Vector.cpp"
 #include "../include/Node.h"
 
 Vector<std::string> split(std::string expression, char delimiter) {
