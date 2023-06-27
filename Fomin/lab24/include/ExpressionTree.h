@@ -19,7 +19,7 @@ public:
     std::string getExpression();
 
     void deleteTree(Node* node);
-    Node* createTree(const std::string& postfix);
+    void createTree(const std::string& postfix);
     std::string doPostfix(const std::string& expression);
     void composeToSquaredExpression();
 

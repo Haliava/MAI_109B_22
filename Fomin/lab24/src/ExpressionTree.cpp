@@ -1,11 +1,11 @@
 #include "../include/ExpressionTree.h"
-#include <stack>
-#include <vector>
+#include "../../../Koncebalov/lab24/Stack.hpp"
+#include "../../../Huan/kp7/Vector.hpp"
 #include "../include/Node.h"
 
-std::vector<std::string> split(std::string expression, char delimiter) {
+Vector<std::string> split(std::string expression, char delimiter) {
     int pos;
-    std::vector<std::string> exprParts;
+    Vector<std::string> exprParts;
     std::string token;
     std::string expressionCopy = expression;
     while ((pos = expressionCopy.find(delimiter)) != std::string::npos) {
@@ -22,7 +22,7 @@ ExpressionTree::ExpressionTree() : root(nullptr) {}
 
 ExpressionTree::ExpressionTree(const std::string &expression) {
     std::string postfix = doPostfix(expression);
-    root = createTree(postfix);
+    createTree(postfix);
     this->expression = expression;
 }
 
@@ -54,7 +54,7 @@ bool isOperator(char c) {
 
 std::string ExpressionTree::doPostfix(const std::string &expression) {
     std::string postfix = "";
-    std::stack<char> stack;
+    Stack<char> stack;
 
     for (size_t i = 0; i != expression.size(); ++i) {
         char c = expression[i];
@@ -90,81 +90,84 @@ std::string ExpressionTree::doPostfix(const std::string &expression) {
 void ExpressionTree::deleteTree(Node *node) {
     if (node == nullptr) return;
 
-    deleteTree(node->left);
-    deleteTree(node->right);
-    delete node;
+    deleteTree(node->getLeft());
+    deleteTree(node->getRight());
+    node = nullptr;
 }
 
-Node *ExpressionTree::createTree(const std::string &postfix) {
-    if (postfix.length() == 0) return nullptr;
-    std::stack<Node *> stack;
+void ExpressionTree::createTree(const std::string &postfix) {
+    if (postfix.length() == 0) {
+        this->root = nullptr;
+        return;
+    }
+    Stack<Node> stack;
 
     for (char c: postfix) {
         if (c == '~') {
-            Node *node_x = stack.top();
+            Node node_x = stack.top();
             stack.pop();
 
-            Node *node = new Node('-', nullptr, node_x);
-            stack.push(node);
+            Node* node = new Node('-', nullptr, &node_x);
+            stack.push(*node);
         } else if (isOperator(c)) {
-            Node *node_x = stack.top();
+            Node node_x = stack.top();
             stack.pop();
 
-            Node *node_y = stack.top();
+            Node node_y = stack.top();
             stack.pop();
 
-            Node *node = new Node(c, node_y, node_x);
-            stack.push(node);
+            Node* node = new Node(c, &node_y, &node_x);
+            stack.push(*node);
         } else {
-            stack.push(new Node(c));
+            stack.push(*new Node(c, nullptr, nullptr));
         }
     }
 
-    return stack.top();
+    this->root = &stack.top();
 }
 
 void ExpressionTree::printPostfix(Node *root) {
     if (root == nullptr) return;
 
-    printPostfix(root->left);
-    printPostfix(root->right);
-    std::cout << root->data;
+    printPostfix(root->getLeft());
+    printPostfix(root->getRight());
+    std::cout << root->getData();
 }
 
 void ExpressionTree::printInfix(Node *root) const {
     if (root == nullptr) return;
 
-    if (isOperator(root->data)) {
+    if (isOperator(root->getData())) {
         std::cout << '(';
     }
 
-    printInfix(root->left);
-    std::cout << root->data;
-    printInfix(root->right);
+    printInfix(root->getLeft());
+    std::cout << root->getData();
+    printInfix(root->getRight());
 
-    if (isOperator(root->data)) {
+    if (isOperator(root->getData())) {
         std::cout << ')';
     }
 }
 
 void ExpressionTree::printTree(Node *root, const size_t height) const {
     if (root != nullptr) {
-        printTree(root->right, height + 1);
+        printTree(root->getRight(), height + 1);
         for (size_t i = 0; i < height; ++i) {
             std::cout << "\t";
         }
-        std::cout << root->data << "\n";
-        printTree(root->left, height + 1);
+        std::cout << root->getData() << "\n";
+        printTree(root->getLeft(), height + 1);
     }
 }
 
 void ExpressionTree::composeToSquaredExpression() {
     if (root == nullptr) return;
 
-    std::vector<std::string> parts = split(getExpression(), '+');
-    std::vector<std::string> firstPart = split(parts[0], '^');
-    std::vector<std::string> secondPart = split(parts[1], '*');
-    std::vector<std::string> thirdPart = split(parts[2], '^');
+    Vector<std::string> parts = split(getExpression(), '+');
+    Vector<std::string> firstPart = split(parts[0], '^');
+    Vector<std::string> secondPart = split(parts[1], '*');
+    Vector<std::string> thirdPart = split(parts[2], '^');
 
     if (
         std::stoi(firstPart[1]) % 2 != 0 ||
@@ -176,15 +179,11 @@ void ExpressionTree::composeToSquaredExpression() {
     secondPart[0] = std::to_string(std::stoi(secondPart[0]) / 2);
     thirdPart[1] = std::to_string(std::stoi(thirdPart[1]) / 2);
 
-    std::string newExpression =
-            "(" +
-                firstPart[0] + "^" + firstPart[1] + "+" + thirdPart[0] + "^" + thirdPart[1] +
-            ")^2";
-    //std::cout << newExpression << std::endl;
-
     deleteTree(getRoot());
-    expression = newExpression;
-    root = createTree(doPostfix(newExpression));
+    expression = "(" +
+                    firstPart[0] + "^" + firstPart[1] + "+" + thirdPart[0] + "^" + thirdPart[1] +
+                 ")^2";;
+    createTree(doPostfix(expression));
 }
 
 std::string ExpressionTree::getExpression() {

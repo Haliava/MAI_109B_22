@@ -4,8 +4,6 @@
 class ExpressionTree;
 
 class Node{
-    friend class ExpressionTree;
-
 private:
     char data;
     Node* left;
@@ -15,6 +13,9 @@ public:
     Node();
     Node(const char data);
     Node(const char data, Node* left, Node* right);
+    char getData();
+    Node* getLeft();
+    Node* getRight();
 };
 
 #endif
